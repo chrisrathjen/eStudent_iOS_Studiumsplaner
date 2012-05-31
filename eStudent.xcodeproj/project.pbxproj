@@ -69,12 +69,6 @@
 		EB0C9AC31567C89D00B0DDDA /* ESStundenplanDataManager.m in Sources */ = {isa = PBXBuildFile; fileRef = EB0C9AC21567C89D00B0DDDA /* ESStundenplanDataManager.m */; };
 		EB135ED51571026200B01517 /* Veranstaltung.m in Sources */ = {isa = PBXBuildFile; fileRef = EB135ED41571026200B01517 /* Veranstaltung.m */; };
 		EB169AE9156D5B5500B38332 /* ESSettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EB169AE8156D5B5500B38332 /* ESSettingsViewController.m */; };
-		EB16BB90154C0B66007BA098 /* button_mensa.png in Resources */ = {isa = PBXBuildFile; fileRef = EB16BB8E154C0B66007BA098 /* button_mensa.png */; };
-		EB16BB91154C0B66007BA098 /* button_mensa@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EB16BB8F154C0B66007BA098 /* button_mensa@2x.png */; };
-		EB16BB96154C0C2D007BA098 /* button_pruef.png in Resources */ = {isa = PBXBuildFile; fileRef = EB16BB92154C0C2D007BA098 /* button_pruef.png */; };
-		EB16BB97154C0C2D007BA098 /* button_pruef@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EB16BB93154C0C2D007BA098 /* button_pruef@2x.png */; };
-		EB16BB98154C0C2D007BA098 /* button_taskplaner.png in Resources */ = {isa = PBXBuildFile; fileRef = EB16BB94154C0C2D007BA098 /* button_taskplaner.png */; };
-		EB16BB99154C0C2D007BA098 /* button_taskplaner@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EB16BB95154C0C2D007BA098 /* button_taskplaner@2x.png */; };
 		EB35AFA51500C4FD0010A9B1 /* background_1.jpg in Resources */ = {isa = PBXBuildFile; fileRef = EB35AFA31500C4FD0010A9B1 /* background_1.jpg */; };
 		EB35AFA61500C4FD0010A9B1 /* background_1@2x.jpg in Resources */ = {isa = PBXBuildFile; fileRef = EB35AFA41500C4FD0010A9B1 /* background_1@2x.jpg */; };
 		EB3881A915779D44008548D6 /* no_delete_img.png in Resources */ = {isa = PBXBuildFile; fileRef = EB3881A815779D44008548D6 /* no_delete_img.png */; };
@@ -263,12 +257,6 @@
 		EB135ED41571026200B01517 /* Veranstaltung.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Veranstaltung.m; sourceTree = "<group>"; };
 		EB169AE7156D5B5500B38332 /* ESSettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ESSettingsViewController.h; sourceTree = "<group>"; };
 		EB169AE8156D5B5500B38332 /* ESSettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ESSettingsViewController.m; sourceTree = "<group>"; };
-		EB16BB8E154C0B66007BA098 /* button_mensa.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = button_mensa.png; path = ../../estudent_grafiken/button_mensa.png; sourceTree = "<group>"; };
-		EB16BB8F154C0B66007BA098 /* button_mensa@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "button_mensa@2x.png"; path = "../../estudent_grafiken/button_mensa@2x.png"; sourceTree = "<group>"; };
-		EB16BB92154C0C2D007BA098 /* button_pruef.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = button_pruef.png; path = ../../estudent_grafiken/button_pruef.png; sourceTree = "<group>"; };
-		EB16BB93154C0C2D007BA098 /* button_pruef@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "button_pruef@2x.png"; path = "../../estudent_grafiken/button_pruef@2x.png"; sourceTree = "<group>"; };
-		EB16BB94154C0C2D007BA098 /* button_taskplaner.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = button_taskplaner.png; path = ../../estudent_grafiken/button_taskplaner.png; sourceTree = "<group>"; };
-		EB16BB95154C0C2D007BA098 /* button_taskplaner@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "button_taskplaner@2x.png"; path = "../../estudent_grafiken/button_taskplaner@2x.png"; sourceTree = "<group>"; };
 		EB35AFA31500C4FD0010A9B1 /* background_1.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = background_1.jpg; sourceTree = "<group>"; };
 		EB35AFA41500C4FD0010A9B1 /* background_1@2x.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "background_1@2x.jpg"; sourceTree = "<group>"; };
 		EB3881A815779D44008548D6 /* no_delete_img.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = no_delete_img.png; sourceTree = "<group>"; };
@@ -682,12 +670,6 @@
 				8331E3B91578141F00077195 /* button_pruef@2x.png */,
 				8331E3BA1578141F00077195 /* button_taskplaner.png */,
 				8331E3BB1578141F00077195 /* button_taskplaner@2x.png */,
-				EB16BB92154C0C2D007BA098 /* button_pruef.png */,
-				EB16BB93154C0C2D007BA098 /* button_pruef@2x.png */,
-				EB16BB94154C0C2D007BA098 /* button_taskplaner.png */,
-				EB16BB95154C0C2D007BA098 /* button_taskplaner@2x.png */,
-				EB16BB8E154C0B66007BA098 /* button_mensa.png */,
-				EB16BB8F154C0B66007BA098 /* button_mensa@2x.png */,
 				EBE3EE0A150036E200C5E082 /* button_stundenplan@2x.png */,
 				EBE3EE0C150036E200C5E082 /* button_vorl@2x.png */,
 				EBE3EE001500351200C5E082 /* button_stundenplan.png */,
@@ -894,12 +876,6 @@
 				EBC8557F1541ABE100C6ED2F /* background_17@2x.jpg in Resources */,
 				EBC855801541ABE100C6ED2F /* background_18.jpg in Resources */,
 				EBC855811541ABE100C6ED2F /* background_18@2x.jpg in Resources */,
-				EB16BB90154C0B66007BA098 /* button_mensa.png in Resources */,
-				EB16BB91154C0B66007BA098 /* button_mensa@2x.png in Resources */,
-				EB16BB96154C0C2D007BA098 /* button_pruef.png in Resources */,
-				EB16BB97154C0C2D007BA098 /* button_pruef@2x.png in Resources */,
-				EB16BB98154C0C2D007BA098 /* button_taskplaner.png in Resources */,
-				EB16BB99154C0C2D007BA098 /* button_taskplaner@2x.png in Resources */,
 				2430F99E155D2B5D00F2AED0 /* highpriority.png in Resources */,
 				2430F99F155D2B5D00F2AED0 /* highpriority@2x.png in Resources */,
 				EBE93C66156160900067B3FF /* delete_button.png in Resources */,
