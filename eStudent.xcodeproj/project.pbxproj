@@ -16,6 +16,12 @@
 		8326FDFD15483B06008024E4 /* CategoriesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8326FDFC15483B06008024E4 /* CategoriesViewController.m */; };
 		8327F77715711F3000BC5664 /* SelectCourseForOptionalViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8327F77615711F3000BC5664 /* SelectCourseForOptionalViewController.m */; };
 		832AC7C214C317E900A340A1 /* DataModelER.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 832AC7C014C317E900A340A1 /* DataModelER.xcdatamodeld */; };
+		8331E3BC1578141F00077195 /* button_mensa.png in Resources */ = {isa = PBXBuildFile; fileRef = 8331E3B61578141F00077195 /* button_mensa.png */; };
+		8331E3BD1578141F00077195 /* button_mensa@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8331E3B71578141F00077195 /* button_mensa@2x.png */; };
+		8331E3BE1578141F00077195 /* button_pruef.png in Resources */ = {isa = PBXBuildFile; fileRef = 8331E3B81578141F00077195 /* button_pruef.png */; };
+		8331E3BF1578141F00077195 /* button_pruef@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8331E3B91578141F00077195 /* button_pruef@2x.png */; };
+		8331E3C01578141F00077195 /* button_taskplaner.png in Resources */ = {isa = PBXBuildFile; fileRef = 8331E3BA1578141F00077195 /* button_taskplaner.png */; };
+		8331E3C11578141F00077195 /* button_taskplaner@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8331E3BB1578141F00077195 /* button_taskplaner@2x.png */; };
 		83347967154D3F2500C20CC2 /* ERStatisticsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 83347966154D3F2500C20CC2 /* ERStatisticsViewController.m */; };
 		83372430151DA57000F8BE1D /* ERRegulationListingDownloader.m in Sources */ = {isa = PBXBuildFile; fileRef = 8337242F151DA57000F8BE1D /* ERRegulationListingDownloader.m */; };
 		83372434151DD5A700F8BE1D /* RegulationListingController.m in Sources */ = {isa = PBXBuildFile; fileRef = 83372433151DD5A700F8BE1D /* RegulationListingController.m */; };
@@ -163,6 +169,12 @@
 		8327F77515711F3000BC5664 /* SelectCourseForOptionalViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SelectCourseForOptionalViewController.h; sourceTree = "<group>"; };
 		8327F77615711F3000BC5664 /* SelectCourseForOptionalViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SelectCourseForOptionalViewController.m; sourceTree = "<group>"; };
 		832AC7C114C317E900A340A1 /* DataModelER.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = DataModelER.xcdatamodel; sourceTree = "<group>"; };
+		8331E3B61578141F00077195 /* button_mensa.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = button_mensa.png; sourceTree = "<group>"; };
+		8331E3B71578141F00077195 /* button_mensa@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "button_mensa@2x.png"; sourceTree = "<group>"; };
+		8331E3B81578141F00077195 /* button_pruef.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = button_pruef.png; sourceTree = "<group>"; };
+		8331E3B91578141F00077195 /* button_pruef@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "button_pruef@2x.png"; sourceTree = "<group>"; };
+		8331E3BA1578141F00077195 /* button_taskplaner.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = button_taskplaner.png; sourceTree = "<group>"; };
+		8331E3BB1578141F00077195 /* button_taskplaner@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "button_taskplaner@2x.png"; sourceTree = "<group>"; };
 		83347965154D3F2500C20CC2 /* ERStatisticsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ERStatisticsViewController.h; sourceTree = "<group>"; };
 		83347966154D3F2500C20CC2 /* ERStatisticsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ERStatisticsViewController.m; sourceTree = "<group>"; };
 		8337242E151DA57000F8BE1D /* ERRegulationListingDownloader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ERRegulationListingDownloader.h; sourceTree = "<group>"; };
@@ -664,6 +676,12 @@
 		EBE3EE1615003A6F00C5E082 /* HomescreenButtons */ = {
 			isa = PBXGroup;
 			children = (
+				8331E3B61578141F00077195 /* button_mensa.png */,
+				8331E3B71578141F00077195 /* button_mensa@2x.png */,
+				8331E3B81578141F00077195 /* button_pruef.png */,
+				8331E3B91578141F00077195 /* button_pruef@2x.png */,
+				8331E3BA1578141F00077195 /* button_taskplaner.png */,
+				8331E3BB1578141F00077195 /* button_taskplaner@2x.png */,
 				EB16BB92154C0C2D007BA098 /* button_pruef.png */,
 				EB16BB93154C0C2D007BA098 /* button_pruef@2x.png */,
 				EB16BB94154C0C2D007BA098 /* button_taskplaner.png */,
@@ -900,6 +918,12 @@
 				EB3881A915779D44008548D6 /* no_delete_img.png in Resources */,
 				EB3881AC1577D9E3008548D6 /* delete_img@2x.png in Resources */,
 				EB3881AD1577D9E3008548D6 /* no_delete_img@2x.png in Resources */,
+				8331E3BC1578141F00077195 /* button_mensa.png in Resources */,
+				8331E3BD1578141F00077195 /* button_mensa@2x.png in Resources */,
+				8331E3BE1578141F00077195 /* button_pruef.png in Resources */,
+				8331E3BF1578141F00077195 /* button_pruef@2x.png in Resources */,
+				8331E3C01578141F00077195 /* button_taskplaner.png in Resources */,
+				8331E3C11578141F00077195 /* button_taskplaner@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
