@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model name="" userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="1171" systemVersion="11E53" minimumToolsVersion="Automatic" macOSVersion="Automatic" iOSVersion="Automatic">
+    <entity name="Category" representedClassName="Category" syncable="YES">
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="courses" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Course_ER" inverseName="category" inverseEntity="Course_ER" syncable="YES"/>
+        <relationship name="criteria" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Criterion" inverseName="category" inverseEntity="Criterion" syncable="YES"/>
+        <relationship name="examReg" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="ExamRegulations" inverseName="categories" inverseEntity="ExamRegulations" syncable="YES"/>
+        <relationship name="hasChoice" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Choosable" inverseName="category" inverseEntity="Choosable" syncable="YES"/>
+        <relationship name="optional" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Optional" inverseName="category" inverseEntity="Optional" syncable="YES"/>
+    </entity>
+    <entity name="Choosable" representedClassName="Choosable" syncable="YES">
+        <attribute name="cp" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="duration" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="category" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Category" inverseName="hasChoice" inverseEntity="Category" syncable="YES"/>
+        <relationship name="choices" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Course_ER" inverseName="isChoice" inverseEntity="Course_ER" syncable="YES"/>
+    </entity>
+    <entity name="Course_ER" representedClassName="Course_ER" syncable="YES">
+        <attribute name="cp" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="duration" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="mark" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="necCP" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="passed" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="vak" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="category" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Category" inverseName="courses" inverseEntity="Category" syncable="YES"/>
+        <relationship name="isChoice" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Choosable" inverseName="choices" inverseEntity="Choosable" syncable="YES"/>
+        <relationship name="optional" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Optional" inverseName="courses" inverseEntity="Optional" syncable="YES"/>
+    </entity>
+    <entity name="Criterion" representedClassName="Criterion" syncable="YES">
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="note" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="passed" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <relationship name="category" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Category" inverseName="criteria" inverseEntity="Category" syncable="YES"/>
+    </entity>
+    <entity name="ExamRegulations" representedClassName="ExamRegulations" syncable="YES">
+        <attribute name="cp" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="degree" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="facultyNr" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="fileName" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="regulationdate" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="subject" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="categories" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Category" inverseName="examReg" inverseEntity="Category" syncable="YES"/>
+    </entity>
+    <entity name="Optional" representedClassName="Optional" syncable="YES">
+        <attribute name="cp" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="vak" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="category" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Category" inverseName="optional" inverseEntity="Category" syncable="YES"/>
+        <relationship name="courses" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Course_ER" inverseName="optional" inverseEntity="Course_ER" syncable="YES"/>
+    </entity>
+    <elements>
+        <element name="Category" positionX="225" positionY="-18" width="128" height="135"/>
+        <element name="Choosable" positionX="414" positionY="117" width="128" height="120"/>
+        <element name="Course_ER" positionX="223" positionY="201" width="128" height="195"/>
+        <element name="Criterion" positionX="52" positionY="-108" width="128" height="105"/>
+        <element name="ExamRegulations" positionX="223" positionY="-234" width="128" height="150"/>
+        <element name="Optional" positionX="54" positionY="108" width="128" height="120"/>
+    </elements>
+</model>

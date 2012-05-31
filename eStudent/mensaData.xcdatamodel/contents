@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model name="" userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="1171" systemVersion="11E53" minimumToolsVersion="Automatic" macOSVersion="Automatic" iOSVersion="Automatic">
+    <entity name="Day" representedClassName="Day" syncable="YES">
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="foods" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Food" inverseName="day" inverseEntity="Food" syncable="YES"/>
+        <relationship name="location" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Menu" inverseName="days" inverseEntity="Menu" syncable="YES"/>
+    </entity>
+    <entity name="Food" representedClassName="Food" syncable="YES">
+        <attribute name="extra" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="foodDescription" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="order" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="staffPrice" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="studentPrice" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="type" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="day" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Day" inverseName="foods" inverseEntity="Day" syncable="YES"/>
+    </entity>
+    <entity name="Menu" representedClassName="Menu" syncable="YES">
+        <attribute name="location" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="week" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="days" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Day" inverseName="location" inverseEntity="Day" syncable="YES"/>
+    </entity>
+    <elements>
+        <element name="Day" positionX="90" positionY="198" width="128" height="90"/>
+        <element name="Food" positionX="88" positionY="351" width="128" height="165"/>
+        <element name="Menu" positionX="88" positionY="45" width="128" height="90"/>
+    </elements>
+</model>

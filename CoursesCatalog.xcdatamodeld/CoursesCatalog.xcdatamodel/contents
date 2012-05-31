@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model name="" userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="1171" systemVersion="11E53" minimumToolsVersion="Automatic" macOSVersion="Automatic" iOSVersion="Automatic">
+    <entity name="CourseCourse" representedClassName="CourseCourse" syncable="YES">
+        <attribute name="course_description" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="ects" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="vak" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="belongsToSubject" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="CourseSubject" inverseName="hasCourses" inverseEntity="CourseSubject" syncable="YES"/>
+        <relationship name="hasDate" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="CourseDate" inverseName="belongsToCourseDate" inverseEntity="CourseDate" syncable="YES"/>
+        <relationship name="hasStaff" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="CourseStaff" inverseName="belongsToCourseStaff" inverseEntity="CourseStaff" syncable="YES"/>
+    </entity>
+    <entity name="CourseDate" representedClassName="CourseDate" syncable="YES">
+        <attribute name="dayEnd" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="dayStart" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="endRange" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="prefix" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="room" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="startRange" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="text" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="weekDay" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="belongsToCourseDate" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="CourseCourse" inverseName="hasDate" inverseEntity="CourseCourse" syncable="YES"/>
+    </entity>
+    <entity name="CourseStaff" representedClassName="CourseStaff" syncable="YES">
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="belongsToCourseStaff" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="CourseCourse" inverseName="hasStaff" inverseEntity="CourseCourse" syncable="YES"/>
+    </entity>
+    <entity name="CourseSubject" representedClassName="CourseSubject" syncable="YES">
+        <attribute name="file" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="semester" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="hasCourses" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="CourseCourse" inverseName="belongsToSubject" inverseEntity="CourseCourse" syncable="YES"/>
+    </entity>
+    <elements>
+        <element name="CourseCourse" positionX="189" positionY="165" width="128" height="150"/>
+        <element name="CourseDate" positionX="-9" positionY="144" width="128" height="180"/>
+        <element name="CourseStaff" positionX="396" positionY="186" width="128" height="75"/>
+        <element name="CourseSubject" positionX="198" positionY="-0" width="128" height="105"/>
+    </elements>
+</model>

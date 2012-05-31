@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model name="" userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="1171" systemVersion="11E53" minimumToolsVersion="Xcode 4.1" macOSVersion="Automatic" iOSVersion="Automatic">
+    <entity name="Veranstaltung" representedClassName="Veranstaltung" syncable="YES">
+        <attribute name="anfangsdatum" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="anfangszeit" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="enddatum" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="endzeit" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="hidden" optional="YES" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
+        <attribute name="ort" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="titel" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="veranstaltungsart" optional="YES" attributeType="String" defaultValueString="V" syncable="YES"/>
+        <attribute name="wochentag" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
+    <elements>
+        <element name="Veranstaltung" positionX="160" positionY="192" width="128" height="180"/>
+    </elements>
+</model>
