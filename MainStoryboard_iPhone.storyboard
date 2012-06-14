@@ -413,9 +413,6 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                     <navigationItem key="navigationItem" title="Universität Bremen" id="gYB-dC-K74">
                         <barButtonItem key="backBarButtonItem" title="Home" id="Veq-bW-esi"/>
                     </navigationItem>
-                    <connections>
-                        <outlet property="navigationItem" destination="gYB-dC-K74" id="4FW-Iy-Ni3"/>
-                    </connections>
                 </viewController>
             </objects>
             <point key="canvasLocation" x="-605" y="-852"/>
@@ -569,6 +566,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
             <objects>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="cbx-lS-ct2" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <navigationController definesPresentationContext="YES" id="GSy-0J-EGs" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="Fak-M7-D30"/>
                     <navigationBar key="navigationBar" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" id="qLQ-8s-XnM">
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="tintColor" red="0.0" green="0.52156865600000002" blue="0.8078432083" alpha="1" colorSpace="deviceRGB"/>

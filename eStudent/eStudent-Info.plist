@@ -12,6 +12,8 @@
 	<array>
 		<string>icon57.png</string>
 		<string>icon114.png</string>
+		<string>Default.png</string>
+		<string>Default@2x.png</string>
 	</array>
 	<key>CFBundleIcons</key>
 	<dict>
@@ -19,22 +21,17 @@
 		<dict>
 			<key>CFBundleIconFiles</key>
 			<array>
-				<string>uni_logo2.png</string>
-				<string>uni_logo2_small.png</string>
-				<string>uni_logo2_retina.png</string>
-				<string>uni_logo_retina.png</string>
-				<string>uni_logo.png</string>
-				<string>logo_retina.png</string>
-				<string>logo.png</string>
 				<string>icon57.png</string>
 				<string>icon114.png</string>
+				<string>Default.png</string>
+				<string>Default@2x.png</string>
 			</array>
 			<key>UIPrerenderedIcon</key>
 			<true/>
 		</dict>
 	</dict>
 	<key>CFBundleIdentifier</key>
-	<string>de.tzi.estudent</string>
+	<string>de.estudent.tzi</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
@@ -52,7 +49,7 @@
 	<key>UIMainStoryboardFile</key>
 	<string>MainStoryboard_iPhone</string>
 	<key>UIMainStoryboardFile~ipad</key>
-	<string>MainStoryboard_iPad</string>
+	<string>MainStoryboard_iPhone</string>
 	<key>UIPrerenderedIcon</key>
 	<true/>
 	<key>UIRequiredDeviceCapabilities</key>

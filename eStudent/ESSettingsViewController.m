@@ -29,6 +29,10 @@
     {
         [self.essensFarbenSwitch setOn:YES];
     }
+    else 
+    {
+        [self.essensFarbenSwitch setOn:NO];
+    }
     
     self.essensSwitchCell.layer.borderColor = [UIColor colorWithRed:.5 green:.5 blue:.5 alpha:1.0].CGColor;
     self.essensSwitchCell.layer.borderWidth = .4f;
@@ -46,14 +50,14 @@
         [userDefaults setBool:NO forKey:@"essensFarben"];
         [userDefaults synchronize];
         self.essensFarbenGesetzt = NO;
-        [self.essensFarbenSwitch setOn:NO];
+        [self.essensFarbenSwitch setOn:YES];
     }
     else 
     {
         [userDefaults setBool:YES forKey:@"essensFarben"];
         [userDefaults synchronize];
         self.essensFarbenGesetzt = YES;
-        [self.essensFarbenSwitch setOn:YES];
+        [self.essensFarbenSwitch setOn:NO];
     }
 }
 
