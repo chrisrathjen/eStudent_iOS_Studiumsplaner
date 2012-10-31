@@ -47,6 +47,7 @@
 @synthesize subjectCourses = _subjectCourses;
 
 
+
 // 1. Setzt Propertys und startet die Verbindung zur Datenbank
 - (void)getXMLDataFromServer:(NSString *)Subject
 {
@@ -63,16 +64,19 @@
     NSURL *filePath = [[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask]lastObject];
     //Setzte Verzeichnissnamen fuer die aktuelle Datenbank courses
     filePath = [filePath URLByAppendingPathComponent:@"courses"];
+    self.coursesDatabase = [[UIManagedDocument alloc] initWithFileURL:filePath];
     
-    if (!self.coursesDatabase) {
-        self.coursesDatabase = [[UIManagedDocument alloc] initWithFileURL:filePath];
-    }
 }
 
 // 3. Set Courses Database
 -(void)setCoursesDatabase:(UIManagedDocument *)coursesDatabase
 {
     if (_coursesDatabase != coursesDatabase) {
+        NSDictionary *options = [NSDictionary dictionaryWithObjectsAndKeys:
+                                 [NSNumber numberWithBool:YES], NSMigratePersistentStoresAutomaticallyOption,
+                                 [NSNumber numberWithBool:YES], NSInferMappingModelAutomaticallyOption, nil];
+        coursesDatabase.persistentStoreOptions = options;
+        
         _coursesDatabase = coursesDatabase;
         [self useDocument];
     }
@@ -80,7 +84,7 @@
 
 // 4. Diese Methode sucht nach einer lokalen Datenbank (und erstellt diese falls nicht vorhanden). Jenachdem in welchem Zustand die Datenbank ist wird diese erstellt oder genutzt. Muss sie erstellt werden sind auch keine lokalen Daten verfuegbar und ein neuer Datensatz wird geparsed und danach abgespeichert. Ist bereits eine Datenbank vorhanden und verfuegbar wird ueberprueft ob die Datenbank einen aktuellen Datensatz enthaellt. Ist dies nicht der Fall wird eine neue Version geparsed und gespeichert. Fuer den Fall das ein aktueller Datensatz vorhanden ist wird diese geladen
 -(void)useDocument{
-    
+    NSLog(@"Access Document");
     if (![[NSFileManager defaultManager] fileExistsAtPath:[self.coursesDatabase.fileURL path]]){
         //Falls die Datei nicht existiert wird sie erstellt
         [self.coursesDatabase saveToURL:self.coursesDatabase.fileURL forSaveOperation:UIDocumentSaveForCreating completionHandler:^(BOOL success){
@@ -91,7 +95,8 @@
     } 
     
     if (self.coursesDatabase.documentState == UIDocumentStateClosed){
-        NSLog(@"oeffne bestehende DB");
+        [self.coursesDatabase closeWithCompletionHandler:nil];
+        NSLog(@"oeffne bestehende DB, %@", [self.coursesDatabase description]);
         [self.coursesDatabase openWithCompletionHandler:^(BOOL success){
             NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"CourseSubject"];
             request.sortDescriptors = [NSArray arrayWithObject:[NSSortDescriptor sortDescriptorWithKey:@"file" ascending:YES]];
@@ -105,9 +110,10 @@
                 [self loadDataFromDisk];
             } else {
                 [self getDataFromNetwork:self.currentSubject];
-                NSLog(@"Found Entry but parsing from the net");
+                NSLog(@"Found empty database, parsing from the net");
             }
         }];
+        
         return;
     }
     
@@ -124,7 +130,7 @@
             [self loadDataFromDisk];
         } else {
            [self getDataFromNetwork:self.currentSubject];
-           NSLog(@"Found database but parsing from the net");
+           NSLog(@"Found empty database, parsing from the net");
         } 
         return;
     }
@@ -133,9 +139,10 @@
 // 5. Get Data From Network
 -(void)getDataFromNetwork:(NSString *)Subject;
 {
-    NSURLRequest *dataRequest = [NSURLRequest requestWithURL:[NSURL URLWithString:[NSString stringWithFormat:CATALOG_COURSES, Subject]] cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:60.0];
+        NSURLRequest *dataRequest = [NSURLRequest requestWithURL:[NSURL URLWithString:[NSString stringWithFormat:CATALOG_COURSES, [Subject stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]]] cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:60.0];
     
     NSURLConnection *dataConnection = [[NSURLConnection alloc] initWithRequest:dataRequest delegate:self];
+        NSLog(@"get Data from network: %@", dataRequest.URL);
     
     if (dataConnection) {
         _dataStorage = [NSMutableData data];
@@ -170,6 +177,7 @@
      
      }else {
          //Dies solle nie passieren aber falls kein entsprechendes Coursese gefunden wurde wird ein neues geparsed
+         NSLog(@"error, using net");
          [self getDataFromNetwork:self.currentSubject];
      }
 } 
@@ -184,7 +192,6 @@
 {
     if (_dataStorage) {
         [_dataStorage appendData:data];
-        NSLog(@"Downloaded stuff");
     }else{
         _dataStorage = [_dataStorage initWithData:data];
     }

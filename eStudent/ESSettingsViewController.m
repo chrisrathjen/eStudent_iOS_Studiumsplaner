@@ -10,6 +10,7 @@
 #import <QuartzCore/QuartzCore.h>
 
 @interface ESSettingsViewController ()
+@property (weak, nonatomic) IBOutlet UILabel *versionLabel;
 
 @end
 
@@ -39,6 +40,12 @@
     self.essensSwitchCell.layer.backgroundColor = [UIColor whiteColor].CGColor;
     self.essensSwitchCell.layer.cornerRadius = 10.0;
     self.essensSwitchCell.layer.masksToBounds = YES;
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    self.versionLabel.text = [NSString stringWithFormat:@"Version: %@", [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleVersion"]];
 }
 
 - (IBAction)essensSwitchgeswitched:(id)sender
@@ -95,4 +102,8 @@
     [defaults synchronize];
 }
 
+- (void)viewDidUnload {
+    [self setVersionLabel:nil];
+    [super viewDidUnload];
+}
 @end

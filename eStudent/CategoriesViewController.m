@@ -14,7 +14,6 @@
 - (void)useDocument;
 - (void)getCategories;
 
-
 @property (nonatomic, strong) NSMutableArray *categories;
 @property (nonatomic, strong) NSString *aNewCat;
 
@@ -157,22 +156,6 @@
 }
 
 
-/*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath
-{
-}
-*/
-
-/*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
-}
-*/
-
 #pragma mark - Table view delegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
@@ -183,7 +166,7 @@
         if (self.delegate){
             [self.delegate categorieFromUserSelection:[self.categories objectAtIndex:[indexPath row]]];
         }
-        [self.navigationController popViewControllerAnimated:YES];        //set Categorie
+        [self.navigationController popViewControllerAnimated:YES];        //set Categorie and pop to last ViewController
     }
 }
 
@@ -193,10 +176,7 @@
     [super viewDidUnload];
 }
 
-- (void)textFieldDidEndEditing:(UITextField *)textField{
-    
-}
-
+//Diese Methode wird aufgerufen wenn der Nutzer eine neue Kategorie erstellen will. Es wird ueberprueft ob der Bezeichner bereits in der Datenbank vorhanden ist. Wenn dies nicht der Fall ist wird die Kategorie angelegt/gespeichert/ausgewaehlt
 - (IBAction)createNewCategorie:(id)sender {
     if (self.theTextField.text) {
         NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"TaskCategory"];

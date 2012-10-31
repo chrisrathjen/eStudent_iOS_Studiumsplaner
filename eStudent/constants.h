@@ -12,3 +12,6 @@
 
 #define BPO_JSON_URL @"http://chrisrathjen.de/eStudent/getFiles.php?action=regulations"
 #define BPO_Regulation @"http://chrisrathjen.de/eStudent/Pruefungsordnungen/"
+
+#define IS_WIDESCREEN ( fabs( ( double )[ [ UIScreen mainScreen ] bounds ].size.height - ( double )568 ) < DBL_EPSILON )
+#define IS_IPHONE_5 ( IS_WIDESCREEN )

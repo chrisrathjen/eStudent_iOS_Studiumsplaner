@@ -15,9 +15,11 @@
 
 @end
 @interface CategoriesViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate>
+
 - (IBAction)createNewCategorie:(id)sender;
+
 @property (nonatomic , strong) id <CategoriesViewControllerDelegate> delegate;
-@property (nonatomic, strong) UIManagedDocument *document;
+@property (nonatomic, strong) UIManagedDocument *document; //Document mit DB link
 @property (nonatomic, weak) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) IBOutlet UITextField *theTextField;
 @end

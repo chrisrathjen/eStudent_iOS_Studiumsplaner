@@ -22,6 +22,7 @@
 	self.scrollview.contentSize = CGSizeMake(320.0, 641.0);
 }
 
+
 - (void)viewDidUnload
 {
     [super viewDidUnload];
@@ -35,8 +36,14 @@
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];    
     NSArray *backgrounds = self.scrollview.subviews;
     for (int i = 0; i < backgrounds.count; i++) {
+        NSString *backgroundImage;
         if ([backgrounds objectAtIndex:i] == sender) {
-            NSString *backgroundImage = [NSString stringWithFormat:@"background_%d.jpg",(i+1)];
+            if (IS_IPHONE_5) {
+                backgroundImage = [NSString stringWithFormat:@"background_%d-568h.jpg",(i+1)];
+                NSLog(@"iPhone5 background set");
+            } else {
+                backgroundImage = [NSString stringWithFormat:@"background_%d.jpg",(i+1)];
+            }
             [userDefaults setObject:backgroundImage forKey:@"backgroundImage"];
             [userDefaults synchronize];
             UINavigationController *nc = [self.navigationController.viewControllers objectAtIndex:1];

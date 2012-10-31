@@ -18,6 +18,7 @@
 
 
 
+
 @interface ERDataManager() 
 
 - (void)useDocument;
@@ -129,6 +130,24 @@
     [self setupDatabaseConnection]; 
 }
 
+- (void)saveEmptyRegulation:(NSString *)title date:(NSString *)date degree:(NSString *)degree cp:(NSString *)cp faculty:(NSString *)faculty
+{
+    [ExamRegulations examRegulationWithParsedData:[NSNumber numberWithInt:[cp intValue]] regulationName:title facultyNr:[NSNumber numberWithInt:[faculty intValue]] regulationDate:date subject:title degree:degree inManagedContext:self.document.managedObjectContext];
+    [self.document saveToURL:self.document.fileURL forSaveOperation:UIDocumentSaveForOverwriting completionHandler:^(BOOL success){
+        NSLog(@"saving Database complete");
+        [self.delegate ERSavingComplete:self];
+    }];
+}
+
+- (void)createNewCategorie:(NSString *)name inRegulation:(ExamRegulations *)aRegualtion
+{
+    [Category categoryWithParsedData:name inExamRegulation:aRegualtion inManagedObjectContext:self.document.managedObjectContext];
+    [self.document saveToURL:self.document.fileURL forSaveOperation:UIDocumentSaveForOverwriting completionHandler:^(BOOL success){
+        NSLog(@"saving Database complete");
+        [self.delegate ERSavingComplete:self];
+    }];
+}
+
 - (void)accessDatabase
 {
     [self setupDatabaseConnection];
@@ -139,6 +158,10 @@
 - (void) setDocument:(UIManagedDocument *)document
 {
     if (_document != document){
+        NSDictionary *options = [NSDictionary dictionaryWithObjectsAndKeys:
+                                 [NSNumber numberWithBool:YES], NSMigratePersistentStoresAutomaticallyOption,
+                                 [NSNumber numberWithBool:YES], NSInferMappingModelAutomaticallyOption, nil];
+        document.persistentStoreOptions = options;
         _document = document;
         if (self.currentURL) {
             [self useDocument];
@@ -431,5 +454,15 @@
     }];
     //delete aRegulation
     
+}
+
+- (void)closeDatabaseConnection {
+    if (self.document.documentState == UIDocumentStateNormal) {
+        [self.document closeWithCompletionHandler:^(BOOL success){
+            if (success) {
+                NSLog(@"Datenbank geschlossen!");
+            }
+        }];
+    }
 }
 @end

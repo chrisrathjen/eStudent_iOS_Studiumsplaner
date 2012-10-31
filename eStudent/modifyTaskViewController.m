@@ -33,7 +33,7 @@
 @synthesize priorityCellView;
 @synthesize theCategorie;
 
-
+//Ist eine Kategorie vom User angeklickt wird diese global in der View gespeichert (self.theCategorie)
 -(void)categorieFromUserSelection:(TaskCategory *)aTaskCategorie{
     self.theCategorie = aTaskCategorie;
     self.updated = YES;
@@ -41,7 +41,7 @@
     self.catButton.titleLabel.text = [NSString stringWithFormat:@"Kategorie: %@", self.theCategorie.name];
 }
 
-
+//Verlaesst der Nutzer diesen View sollen etwaige aenderungen den UI Elementen entnommen und gespeichert werden
 - (void)viewWillDisappear:(BOOL)animated
 {
     if (self.updated && ![self.textField.text isEqualToString:@""]) 
@@ -76,15 +76,15 @@
             }
             [self.document saveToURL:self.document.fileURL forSaveOperation:UIDocumentSaveForOverwriting completionHandler:^(BOOL success) {
                 NSLog(@"saving changes");
-                [self.delegate savingFinished];
+                [self.delegate savingFinished];//sagt dem super view das ale aenderungen gespeichert sind
             }];
         } else {
             NSLog(@"Document war nicht bereit, aenderungen wurden nicht gespeichert");
         }
     }
-    //self.textField.text = nil;
     
 }
+//Diese Methode setzt falls vorhanden die bereits eingetragen Daten (falls eine Aufgabe uebergeben wurde)
 - (void)viewDidAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     self.textField.text = self.aTask.name;
@@ -107,9 +107,19 @@
         self.datePicker.date = [NSDate dateWithTimeIntervalSince1970:time];
     }
 }
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    if (IS_IPHONE_5) {
+        self.scrollView.frame = CGRectMake(0.0, 0.0, 320.0, 480.0);
+    }
+}
+// UI Setup wird hier ausgefuehrt
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
     self.textField.delegate = self;
     
     //Background
@@ -143,7 +153,7 @@
     }
 
 }
-
+//*dueDateCellisTouched - do some UI stuff / set self.updated
 - (IBAction)duaDateCellisTouched:(id)sender
 {
     [self.textField resignFirstResponder];
@@ -158,12 +168,6 @@
 }
 
 
-
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
-{
-    return (interfaceOrientation == UIInterfaceOrientationPortrait);
-}
-
 - (void)viewDidUnload {
     [self setDatePicker:nil];
     [self setTextField:nil];
@@ -172,6 +176,7 @@
     [self setDuaDateCellView:nil];
     [self setPriorityCellView:nil];
     [self setCatButton:nil];
+    [self setScrollView:nil];
     [super viewDidUnload];
 }
 
@@ -180,7 +185,7 @@
 - (void)textFieldDidBeginEditing:(UITextField *)textField{
     self.updated = YES;
 }
-
+//Verlaesst der Nutzer das textfeld wird die Tastertur ausgeblendet und self.updated gesetzt
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
 {
     [self.textField resignFirstResponder];
@@ -192,7 +197,6 @@
     }
     return YES;
 }
-#pragma mark CoreData
 
 
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
@@ -203,8 +207,10 @@
         }
     }
 }
+//Es folgen IBactions die mit UI elemten im View verknuepft sind
 
 
+//Prioritaet geaendert
 - (IBAction)segmentValueChanged:(id)sender {
     self.updated = YES;
     [self resignFirstResponder];
@@ -212,6 +218,7 @@
     NSLog(@"prio changed");
 }
 
+//Datum geaendert - wird aufgerufen wenn der Datepicker nicht mehr dreht
 - (IBAction)dateChanged:(id)sender {
     NSDateFormatter *aDateFormatter = [[NSDateFormatter alloc] init];
     [aDateFormatter setLocale:[[NSLocale alloc] initWithLocaleIdentifier:@"de_DE"]];
@@ -219,7 +226,7 @@
     self.dueDateLabel.text = [aDateFormatter stringFromDate:self.datePicker.date];
     self.updated = YES;
 }
-
+//loescht das dueDate und versteckt den Datepicker
 - (IBAction)removeDueDate:(id)sender {
     self.dueDateLabel.text = @"ohne Datum";
     self.datePicker.hidden = YES;

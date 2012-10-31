@@ -14,8 +14,9 @@
 #import "ERCoursesTableViewController.h"
 #import "ERStatisticsViewController.h"
 #import "CMPopTipView.h"
+#import "NewCategorieViewController.h"
 
-@interface ERCategoryTableViewController() <CMPopTipViewDelegate>
+@interface ERCategoryTableViewController() <CMPopTipViewDelegate, ERDataManagerDelegate>
 @property (nonatomic, strong) CMPopTipView *statsTipView;
 @property (nonatomic, strong) NSArray *dataSource;
 @property (nonatomic, strong) NSArray *sectionNames;
@@ -27,6 +28,11 @@
 @synthesize dataManager = _dataManager;
 @synthesize statsButtom = _statsButtom;
 @synthesize statsTipView, dataSource, sectionNames;
+
+- (void)ERSavingComplete:(ERDataManager *)sender
+{
+    [self setupDataSource];
+}
 
 - (void)showPopTipView {
     NSLog(@"poptip");
@@ -86,12 +92,6 @@
     [super viewDidLoad];
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
     NSString *backgroundImage = [userDefaults stringForKey:@"backgroundImage"];
-    if (!backgroundImage) 
-    {
-        backgroundImage = @"background_1.jpg";
-        [userDefaults setObject:backgroundImage forKey:@"backgroundImage"];
-        [userDefaults synchronize];
-    }
     UIImageView *image = [[UIImageView alloc] initWithImage:[UIImage imageNamed:backgroundImage]];
     self.tableView.backgroundView = image;
 }
@@ -105,6 +105,18 @@
     if (![defaults boolForKey:@"BPOStatsButtomTip"]) {
         [self showPopTipView];
     }
+    if (!self.navigationController.toolbar.hidden) {
+        NSLog(@"toolbar sichtbar");
+    }
+    self.dataManager.delegate = self;
+}
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    self.navigationController.toolbar.tintColor = self.navigationController.navigationBar.tintColor;
+    self.navigationController.toolbarHidden = NO;
+
+    
 }
 
 - (void)setRegulation:(ExamRegulations *)Regulation
@@ -120,10 +132,17 @@
     [self.statsTipView removeFromSuperview];
     self.statsTipView = nil;
 }
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+}
 #pragma mark - Table view data source
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
+    if ([[self.dataSource objectAtIndex:0] count] == 0) {
+        return nil;
+    }
     UIView* headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 40)];
     
     UILabel * headerLabel = [[UILabel alloc] initWithFrame:CGRectZero];
@@ -181,20 +200,34 @@
 
 
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
-    return NO;
+    return YES;
+}
+
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (editingStyle == UITableViewCellEditingStyleDelete)
+    {
+        Category *aCategory = [[self.dataSource objectAtIndex:indexPath.section] objectAtIndex:indexPath.row];
+        [self.dataManager deleteCategory:aCategory];
+        [self setupDataSource];
+    }
 }
 
 #pragma mark - Sague
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-    NSIndexPath *indexPath = [self.tableView indexPathForCell:sender];
-    Category *aCategory = [[self.dataSource objectAtIndex:indexPath.section] objectAtIndex:indexPath.row];
     if ([segue.destinationViewController respondsToSelector:@selector(setCategory:)]){
+        NSIndexPath *indexPath = [self.tableView indexPathForCell:sender];
+        Category *aCategory = [[self.dataSource objectAtIndex:indexPath.section] objectAtIndex:indexPath.row];
         [segue.destinationViewController setCategory:aCategory];
         [segue.destinationViewController setDataManager:self.dataManager];
     }
     if ([segue.identifier isEqualToString:@"ShowStats"] && [segue.destinationViewController respondsToSelector:@selector(setDataManager:)]){
+        [segue.destinationViewController setARegulation:self.Regulation];
+    }
+    if ([segue.identifier isEqualToString:@"createNewCate"]){
+        [segue.destinationViewController setDatamanager:self.dataManager];
         [segue.destinationViewController setARegulation:self.Regulation];
     }
 

@@ -13,9 +13,11 @@
 #import "CategoriesViewController.h"
 #import "CMPopTipView.h"
 
+
+//hier werden private methoden / Attribute deklariert damit der Compiler bescheid weiss (das .h File ist public / .m privat)
 @interface taskTableViewController () <tasksDelegate, CMPopTipViewDelegate>
 - (void)useDocument;
--(void)setupDataSource;
+- (void)setupDataSource;
 
 @property (strong, nonatomic) UIManagedDocument *document; //"Verbindung" zur Datenbank
 @property (strong, nonatomic) NSArray *dataSource; //Array mit den Daten die in der Tabelle auftauchen
@@ -30,7 +32,7 @@
 @synthesize document = _document;
 @synthesize dataSource, sectionNames, theTask, tipView;
 
-
+//Wird nur aufgerufen wenn der User sie noch nie weggeklickt hat
 - (void)showPopTipView {
     NSLog(@"poptip");
     NSString *message = @"Hier werden alle Aufgaben angezeigt, die du anlegst. Du kannst Aufgaben entfernen, indem du von rechts nach links über die Aufgabe wischst";
@@ -66,22 +68,28 @@
 - (void) setDocument:(UIManagedDocument *)document
 {
     if (_document != document){
+        NSDictionary *options = [NSDictionary dictionaryWithObjectsAndKeys:
+                                 [NSNumber numberWithBool:YES], NSMigratePersistentStoresAutomaticallyOption,
+                                 [NSNumber numberWithBool:YES], NSInferMappingModelAutomaticallyOption, nil];
+        document.persistentStoreOptions = options;
         _document = document;
         [self useDocument];//Verbindet das Datenbank objekt (self.document) mit der Datenbank im Speicher
     }
 }
 
-//Erstellt die beiden Arrays die dann vom TableView angezeigt werden
+//Erstellt die beiden Arrays die dann vom TableView angezeigt werden. Einmal die einzelnen aufgaben und dazu die Sections namen (TaskKategorie namen)
 -(void)setupDataSource
 {
-    NSLog(@"setup Datasource");
     NSMutableArray *data = [[NSMutableArray alloc]init];
     NSMutableArray *names = [[NSMutableArray alloc]init];
-
     
+    //Hier sollen aus allen Task nur die Task ohne Kategorie gesucht werden (spaeter vlt etwas performanter umsetzen)
+    //Hole alle "Task"`s aus der Datenbank sortiert nach der Faelligkeit und der prioritaet
     NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"Task"];
     request.sortDescriptors = [NSArray arrayWithObjects:[NSSortDescriptor sortDescriptorWithKey:@"duedate" ascending:YES selector:@selector(localizedCaseInsensitiveCompare:)], [NSSortDescriptor sortDescriptorWithKey:@"priority" ascending:NO selector:@selector(localizedCaseInsensitiveCompare:)],nil];
     NSArray *allTasks = [self.document.managedObjectContext executeFetchRequest:request error:nil];
+    
+    //Hier werden alle Aufgaben gesucht die keine eigene Kategorie haben
     NSMutableArray *tasksWithoutCat = [[NSMutableArray alloc] init];
     for (Task *aTask in allTasks) {
         if (!aTask.category)
@@ -90,7 +98,7 @@
         }
     }
     
-    
+    //Hier werden alle Kategorien gesucht und deren Task zum Datensatz hinzugefügt
     request = [NSFetchRequest fetchRequestWithEntityName:@"TaskCategory"];
     request.sortDescriptors = [NSArray arrayWithObject:[NSSortDescriptor sortDescriptorWithKey:@"name" ascending:YES selector:@selector(localizedCaseInsensitiveCompare:)]];
     NSArray *allCats = [self.document.managedObjectContext executeFetchRequest:request error:nil];
@@ -100,22 +108,26 @@
             [names addObject:aCategory.name];
         }
     }
+    //Wenn es Task ohne Kategorien gibt (siehe oben) werden diese zum Datensatz hinzugefügt
     if ([tasksWithoutCat lastObject])
     {
         [data addObject:tasksWithoutCat];
         [names addObject:@"Keine Kategorie"];
     }
     
-    self.sectionNames = [names copy];
+    self.sectionNames = [names copy]; //copy macht eine unveränderbare Kopie des mutable Arrays
     self.dataSource = [data copy];
-    data = nil;
-    names = nil;
-    [self.tableView reloadData];
+    data = nil; //mem management
+    names = nil;//mem management
+    [self.tableView reloadData]; //refresh table
 }
 
 - (void)useDocument
 {
     NSLog(@"Opening DatabaseConnection");
+    
+    //Hier wird die Datei auf dem reellen Speicher verwaltet
+    //entweder wird die datei erstellt, geöffnet oder benutzt
     
     if (![[NSFileManager defaultManager] fileExistsAtPath:[self.document.fileURL path]]) {
         NSLog(@"There is no Database pls create a Task");
@@ -138,16 +150,19 @@
 -(void)viewWillAppear:(BOOL)animated
 {
     [self.navigationController setToolbarHidden:NO];
+    
+    //Abfrage ob der ToolTip angezeigt werden soll
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     if (![defaults boolForKey:@"TaskTip"]){
         [self showPopTipView];
     }
 }
 
+//Setup der Views die nach dem Segue angezeigt werden (das Document kann damit weiterverwendet werden)
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
     if ([segue.identifier isEqualToString:@"modifyTasks"]){
-        [segue.destinationViewController setDelegate:self];
+        [segue.destinationViewController setDelegate:self];//Delegation sag nach einer änderung bescheid sobald die neuen Daten abgespeichert sind
         [segue.destinationViewController setDocument:self.document];
     }
     if ([segue.identifier isEqualToString:@"setCategorie"]){
@@ -165,6 +180,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    //DateiPfad für die Aufgabenplaner Datenbank
     NSURL *filePath = [[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] lastObject];
     filePath = [filePath URLByAppendingPathComponent:@"Tasks"];
     self.document = [[UIManagedDocument alloc] initWithFileURL:filePath];
@@ -172,12 +188,6 @@
     //Background
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
     NSString *backgroundImage = [userDefaults stringForKey:@"backgroundImage"];
-    if (!backgroundImage) 
-    {
-        backgroundImage = @"background_1.jpg";
-        [userDefaults setObject:backgroundImage forKey:@"backgroundImage"];
-        [userDefaults synchronize];
-    }
     UIImageView *image = [[UIImageView alloc] initWithImage:[UIImage imageNamed:backgroundImage]];
     self.tableView.backgroundView = image;
     
@@ -191,14 +201,10 @@
 
 - (void)viewWillDisappear:(BOOL)animated
 {
+    [super viewWillDisappear:animated];
     [self.tipView dismissAnimated:NO];
-    [self.navigationController setToolbarHidden:YES];
 }
 
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
-{
-    return YES;
-}
 
 #pragma mark - Table view data source
 
@@ -239,6 +245,8 @@
     return [[self.dataSource objectAtIndex:section] count];
 }
 
+//Hier werden die Zellen erstellt und mit Daten/Bilder gefuellt
+//Wird fuer jede Zelle einmal aufgerufen
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     NSArray *tasks = [self.dataSource objectAtIndex:[indexPath section]];
@@ -284,15 +292,16 @@
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    //Aktiviert swipeToDelete
     if (editingStyle == UITableViewCellEditingStyleDelete)
     {
         NSArray *tasks = [self.dataSource objectAtIndex:[indexPath section]];
-        [self.document.managedObjectContext deleteObject:[tasks objectAtIndex:[indexPath row]]];
+        [self.document.managedObjectContext deleteObject:[tasks objectAtIndex:[indexPath row]]];//loescht object
         tasks = nil;
         [self.document saveToURL:self.document.fileURL forSaveOperation:UIDocumentSaveForOverwriting completionHandler:^(BOOL success){
             NSLog(@"completing delete request");
-        }];
-        [self setupDataSource];
+        }];//speichert DB
+        [self setupDataSource];//refresh der Tabelle
     }
 }
 
@@ -301,11 +310,12 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    //Manuelles Segue zur beabeitungsView einer Aufgabe
     NSArray *tasks = [self.dataSource objectAtIndex:[indexPath section]];
     modifyTaskViewController *aModifyTaskViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"modifyExistingTask"];
     aModifyTaskViewController.delegate = self;
     aModifyTaskViewController.document = self.document;
-    aModifyTaskViewController.aTask = [tasks objectAtIndex:[indexPath row]];
+    aModifyTaskViewController.aTask = [tasks objectAtIndex:[indexPath row]];//Wird eine Aufgabe uebergeben so werden die alten Daten geladen und die uebergebene Aufgabe kann aktualisiert werden / ohne eine uebergebene Aufgabe wird eine neue Aufgabe erstellt
     [self.navigationController pushViewController:aModifyTaskViewController animated:YES];
 }
 

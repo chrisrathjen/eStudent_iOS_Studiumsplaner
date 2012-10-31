@@ -16,6 +16,7 @@
 
 
 
+
 @interface MensaDataManager()
 
 - (void)useDocument;
@@ -72,6 +73,10 @@
 -(void)setMenuDatabase:(UIManagedDocument *)menuDatabase
 {
     if (_menuDatabase != menuDatabase) {
+        NSDictionary *options = [NSDictionary dictionaryWithObjectsAndKeys:
+                                 [NSNumber numberWithBool:YES], NSMigratePersistentStoresAutomaticallyOption,
+                                 [NSNumber numberWithBool:YES], NSInferMappingModelAutomaticallyOption, nil];
+        menuDatabase.persistentStoreOptions = options;
         _menuDatabase = menuDatabase;
         [self useDocument];
     }
@@ -229,7 +234,7 @@
     //Ist das Ende des aktuellen Essen's Tag erreicht wird das essen's objekt in das Tagesmenü gespeichert
     if([elementName isEqualToString:@"food"]){
         if (!self.foodOrder){
-            self.foodOrder = [[NSString alloc] initWithString:@"1"];
+            self.foodOrder = @"1";
         }
         self.aFoodEntry.order = self.foodOrder;
         self.foodOrder = [NSString stringWithFormat:@"%d",[self.foodOrder intValue] + 1];

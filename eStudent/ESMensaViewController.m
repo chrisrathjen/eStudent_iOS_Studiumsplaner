@@ -20,7 +20,7 @@ static NSUInteger kNumberOfPages = 5;
 
 @implementation ESMensaViewController
 
-@synthesize dataManager, dateLabel, scrollView, mensaTitle, activityIndicator, pageControl, currentPage, weekday, currentDate, mensaChooseTip, essensFarbenGesetzt;
+@synthesize dataManager, dateLabel, scrollView, mensaTitle, activityIndicator, pageControl, currentPage, weekday, currentDate, mensaChooseTip, essensFarbenGesetzt, dateSchouldBeChanged;
 
 
 - (void)showPopTipView {
@@ -55,6 +55,16 @@ static NSUInteger kNumberOfPages = 5;
     defaults = nil;
 }
 
+- (void) viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    if (IS_IPHONE_5) {
+        self.scrollView.frame = CGRectMake(0.0, 35.0, 320.0, 449.0);
+        self.pageControl.frame = CGRectMake(self.pageControl.frame.origin.x, 475.0, self.pageControl.frame.size.width, self.pageControl.frame.size.height);
+    }
+    
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -63,6 +73,7 @@ static NSUInteger kNumberOfPages = 5;
     NSString *backgroundImage = [defaults stringForKey:@"backgroundImage"];
     self.view.backgroundColor = [[UIColor alloc] initWithPatternImage:[UIImage imageNamed:backgroundImage]];
     self.essensFarbenGesetzt = [defaults boolForKey:@"essensFarben"];
+    self.dateSchouldBeChanged = YES;
 
     NSDate *today = [NSDate date];
     NSDateComponents *components = [[NSCalendar currentCalendar] components:NSWeekdayCalendarUnit fromDate:today];
@@ -77,7 +88,7 @@ static NSUInteger kNumberOfPages = 5;
         [self.dataManager setDelegate:self];
         
         //Lade default Mensa aus den UserDefaults und hole die aktuellen Daten für diese
-        NSString *defaultMensa = [NSString stringWithString:@"uni"];
+        NSString *defaultMensa = @"uni";
         //Setze Default Mensa falls diese nicht gesetzt ist...
         if (![defaults objectForKey:@"defaultMensa"]) {
             [defaults setObject:defaultMensa forKey:@"defaultMensa"];
@@ -389,22 +400,22 @@ static NSUInteger kNumberOfPages = 5;
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     NSString *defaultMensa = [NSString stringWithString:[actionSheet buttonTitleAtIndex:buttonIndex]];
     if ([defaultMensa isEqualToString:@"Uni Boulevard"]) {
-        [defaults setObject:[NSString stringWithString:@"uni"] forKey:@"defaultMensa"];
+        [defaults setObject:@"uni" forKey:@"defaultMensa"];
         [self.mensaTitle setTitle:@"Uni Boulevard"];
     } else if([defaultMensa isEqualToString:@"GW2"]) {
-        [defaults setObject:[NSString stringWithString:@"gw2"] forKey:@"defaultMensa"];
+        [defaults setObject:@"gw2" forKey:@"defaultMensa"];
         [self.mensaTitle setTitle:@"GW2"];
     } else if([defaultMensa isEqualToString:@"Airport"]) {
-        [defaults setObject:[NSString stringWithString:@"air"] forKey:@"defaultMensa"];
+        [defaults setObject:@"air" forKey:@"defaultMensa"];
         [self.mensaTitle setTitle:@"Airport"];
     }  else if([defaultMensa isEqualToString:@"Bremerhaven"]) {
-        [defaults setObject:[NSString stringWithString:@"bhv"] forKey:@"defaultMensa"];
+        [defaults setObject:@"bhv" forKey:@"defaultMensa"];
         [self.mensaTitle setTitle:@"Bremerhaven"];
     } else if([defaultMensa isEqualToString:@"Neustadtwall"]) {
-        [defaults setObject:[NSString stringWithString:@"hsb"] forKey:@"defaultMensa"];
+        [defaults setObject:@"hsb" forKey:@"defaultMensa"];
         [self.mensaTitle setTitle:@"Neustadtwall"];
     } else if([defaultMensa isEqualToString:@"Werderstraße"]) {
-        [defaults setObject:[NSString stringWithString:@"wer"] forKey:@"defaultMensa"];
+        [defaults setObject:@"wer" forKey:@"defaultMensa"];
         [self.mensaTitle setTitle:@"Werderstraße"];
     } 
     [defaults synchronize];
@@ -419,6 +430,7 @@ static NSUInteger kNumberOfPages = 5;
         [self.pageControl setNumberOfPages:1];
         subviews = nil;
         self.currentDate = [NSDate date];
+        self.dateSchouldBeChanged = NO;
         [self.scrollView addSubview:self.activityIndicator];
         [self.scrollView setContentOffset:CGPointMake(0, 0)];
         [self.dateLabel setText:@""];
@@ -449,8 +461,15 @@ static NSUInteger kNumberOfPages = 5;
     
     if (tmp > self.currentPage) 
     {
-        //setzt das Datum einen Tag zurück
-        self.currentDate = [NSDate dateWithTimeInterval:-86400 sinceDate:self.currentDate];
+        if (self.dateSchouldBeChanged)
+        {
+            //setzt das Datum einen Tag zurück
+            self.currentDate = [NSDate dateWithTimeInterval:-86400 sinceDate:self.currentDate];
+        }
+        else
+        {
+            self.dateSchouldBeChanged = YES;
+        }
     }
     else if (tmp < self.currentPage)
     {

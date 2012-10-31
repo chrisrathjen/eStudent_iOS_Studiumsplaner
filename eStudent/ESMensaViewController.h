@@ -21,6 +21,7 @@
 @property (nonatomic) int weekday;
 @property (nonatomic,strong) NSDate *currentDate;
 @property (nonatomic)BOOL essensFarbenGesetzt;
+@property (nonatomic)BOOL dateSchouldBeChanged;
 
 - (void) addMealsToView:(id)meals atPosition:(int)positionOnScreen;
 - (IBAction) chooseMensa:(id)sender;

@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 
 @interface TasksTableViewCell : UITableViewCell
+//Attribute einer Zelle
 @property (nonatomic, retain) IBOutlet UILabel *textLabel;
 @property (nonatomic, retain) IBOutlet UILabel *dateLabel;
 @property (nonatomic, retain) IBOutlet UIImageView *imageView;

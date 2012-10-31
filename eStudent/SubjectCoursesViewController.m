@@ -10,7 +10,7 @@
 #import "CourseCourse.h"
 #import "CoursesDetailsViewController.h"
 
-@interface SubjectCoursesViewController ()
+@interface SubjectCoursesViewController () <UIAlertViewDelegate>
 
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicator;
 @property (nonatomic, strong) NSArray *subjectCourses;
@@ -61,7 +61,6 @@
     }
     UIImageView *image = [[UIImageView alloc] initWithImage:[UIImage imageNamed:backgroundImage]];
     self.tv.backgroundView = image;
-    NSLog(@"Subject View did load %@",backgroundImage);
     
     [super viewDidLoad];
     
@@ -186,12 +185,8 @@
 - (void)noNetworkConnection:(CoursesDataManager *)sender localizedError:(NSString *)errorString
 {
     [self.activityIndicator removeFromSuperview];
-    UITextView *noData = [[UITextView alloc] initWithFrame:CGRectMake(20.0, 5.0, 280.0, 80.0)];
-    noData.text = @"Die Verbindung zu unseren Servern ist fehlgeschlagen, bitte überprüfe deine Internetverbindung und versuche es dann noch einmal.";
-    noData.textAlignment = UITextAlignmentCenter;
-    [noData setScrollEnabled:NO];
-    [noData setEditable:NO];
-    NSLog(@"No Network Connection");
+    UIAlertView *networkAlert = [[UIAlertView alloc] initWithTitle:@"Keine Verbindung" message:errorString delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil];
+    [networkAlert show];
     return;
 }
 
@@ -228,5 +223,8 @@
     [self.navigationController popToRootViewControllerAnimated:YES];
 }
 
-
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    [self.navigationController popViewControllerAnimated:YES];
+}
 @end

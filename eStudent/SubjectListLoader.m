@@ -25,7 +25,7 @@
 // Versucht anhand des Semester eine Verbindung zum Server aufzubauen.
 - (void)getJSONListing:(NSString *)semester {
     NSString *url = [CATALOG_SUBJECTS stringByAppendingString:semester];
-    NSURLRequest *dataRequest = [NSURLRequest requestWithURL:[NSURL URLWithString:[NSString stringWithFormat:url]] cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:60.0];
+    NSURLRequest *dataRequest = [NSURLRequest requestWithURL:[NSURL URLWithString:url] cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:60.0];
     NSURLConnection *dataConnection = [[NSURLConnection alloc] initWithRequest:dataRequest delegate:self];
     
     if (dataConnection) {
@@ -41,6 +41,11 @@
     NSURL *filePath = [[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask]lastObject];
     filePath = [filePath URLByAppendingPathComponent:@"courses"];
     self.coursesDatabase = [[UIManagedDocument alloc] initWithFileURL:filePath];
+    NSDictionary *options = [NSDictionary dictionaryWithObjectsAndKeys:
+                             [NSNumber numberWithBool:YES], NSMigratePersistentStoresAutomaticallyOption,
+                             [NSNumber numberWithBool:YES], NSInferMappingModelAutomaticallyOption, nil];
+    self.coursesDatabase.persistentStoreOptions = options;
+    
     [self useDocument];
     
 }
@@ -129,7 +134,7 @@
 // Wird aufgerufen, wenn das Parsen der Serverdaten beendet ist und wandelt den JSON-String in ein Dictionary um.
 -(void)connectionDidFinishLoading:(NSURLConnection *)connection
 {
-    NSDictionary *listing = (NSDictionary *)[NSJSONSerialization JSONObjectWithData:self.dataStorage options:0 error:nil];
+    NSDictionary *listing = (NSDictionary *)[NSJSONSerialization JSONObjectWithData:self.dataStorage options:kNilOptions error:nil];
     if (listing) [self.delegate SubjectListParsed:listing];
 }
 

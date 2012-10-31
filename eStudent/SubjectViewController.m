@@ -92,7 +92,6 @@
     }
     UIImageView *image = [[UIImageView alloc] initWithImage:[UIImage imageNamed:backgroundImage]];
     self.tv.backgroundView = image;
-    NSLog(@"Subject View did load %@",backgroundImage);
     
     [super viewDidLoad];
     
@@ -146,19 +145,9 @@
     UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
     NSLog(@"choose Subject %@", cell.textLabel.text);
     SubjectCoursesViewController *nextView = [self.storyboard instantiateViewControllerWithIdentifier:@"SubjectCoursesViewController"];
+    
     nextView.title = cell.textLabel.text;
-    
-    NSString *string;
-    NSString *file;
-    for (NSDictionary *row in self.allSubjects) {
-        string = [row objectForKey:@"title"];
-        if(string == nextView.title) {
-            file = [row objectForKey:@"file"];
-            break;
-        }
-    }
-    
-    nextView.fileName = file;
+    nextView.fileName = [[self.subs objectAtIndex:indexPath.row] objectForKey:@"file"];
     nextView.semester = self.title;
     
     [tableView deselectRowAtIndexPath:indexPath animated:YES];

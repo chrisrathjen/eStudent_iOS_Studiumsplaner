@@ -40,12 +40,15 @@
 @interface ERDataManager : NSObject <NSXMLParserDelegate>
 - (void)saveExamRegulation:(NSString *)regulation
                    address:(NSString *)address;
+- (void)saveEmptyRegulation:(NSString *)title date:(NSString *)date degree:(NSString *)degree cp:(NSString *)cp faculty:(NSString *)faculty;
 - (void)accessDatabase;
 - (void)deleteRegulation:(ExamRegulations *)aRegulation;
 - (void)deleteCategory:(Category *)aCategory;
 - (void)getAllRegulations;
 - (void)RegulationsContainingCourse:(NSString *)name orVak:(NSString *)vak;
 - (void)createCourse:(NSString *)title withVak:(NSString *)vak withCP:(NSNumber *)cp inRegulation:(ExamRegulations *)aRegulation;
+- (void)createNewCategorie:(NSString *)name inRegulation:(ExamRegulations *)aRegualtion;
+
 
 @property (nonatomic, weak) id <ERDataManagerDelegate> delegate;
 @property (nonatomic, strong) UIManagedDocument *document;//Datamodel

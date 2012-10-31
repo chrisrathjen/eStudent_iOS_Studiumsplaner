@@ -47,6 +47,13 @@ static BOOL viewReady = NO;
     self.stundenplanDataManager = [[ESStundenplanDataManager alloc] init];
     self.stundenplanDataManager.delegate = self;
     
+    if (IS_IPHONE_5)
+    {
+        self.scrollview.frame = CGRectMake(self.scrollview.frame.origin.x, 80.0, self.scrollview.frame.size.width, self.scrollview.frame.size.height + 87.0);
+        self.left.frame = CGRectMake(self.left.frame.origin.x, self.left.frame.origin.y, self.scrollview.frame.size.width, self.scrollview.frame.size.height);
+        self.middle.frame = CGRectMake(self.middle.frame.origin.x, self.middle.frame.origin.y, self.scrollview.frame.size.width, self.scrollview.frame.size.height);
+        self.right.frame = CGRectMake(self.right.frame.origin.x, self.right.frame.origin.y, self.scrollview.frame.size.width, self.scrollview.frame.size.height);
+    }
     self.scrollview.contentSize = CGSizeMake(scrollview.frame.size.width * 3, scrollview.frame.size.height);
     [self.scrollview setContentOffset:CGPointMake(320.0, 0)];
     [self.scrollview setScrollEnabled:NO];

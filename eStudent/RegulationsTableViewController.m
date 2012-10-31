@@ -73,12 +73,12 @@
     if (![defaults boolForKey:@"BPOImportTip"]){
         [self showPopTipView];
     }
-    
+        [self.navigationController setToolbarHidden:YES animated:YES];
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
-    [super viewWillAppear:animated];
+    [super viewWillAppear:animated];    
     NSLog(@"appeared");
     if (!self.dataManager){
         NSLog(@"starting datamanager and setting delegate");
